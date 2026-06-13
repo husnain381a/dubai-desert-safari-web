@@ -1,0 +1,11 @@
+/* Preloader CSS - Smooth clip-path transitions */
+
+.preloader-fill {
+  will-change: clip-path;
+  transition: clip-path 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preloader-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
