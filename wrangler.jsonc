@@ -3,5 +3,8 @@
   "name": "desert-safari-web",
   "main": "dist/server/server.js",
   "compatibility_date": "2026-06-14",
-  "compatibility_flags": ["nodejs_compat"]
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist/client"
+  }
 }
