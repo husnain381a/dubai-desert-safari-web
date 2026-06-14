@@ -58,30 +58,81 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Red Sand Dunes DXB — Luxury Desert Safari Dubai" },
-      { name: "description", content: "Premium desert safaris, dune bashing, BBQ camps & city tours in Dubai. Book your luxury Arabian adventure with Red Sand Dunes DXB." },
+      {
+        title: "Red Sand Dunes DXB — Luxury Desert Safari Dubai",
+      },
+      {
+        name: "description",
+        content:
+          "Premium desert safaris, dune bashing, BBQ camps & city tours in Dubai. Book your luxury Arabian adventure with Red Sand Dunes DXB.",
+      },
       { name: "author", content: "Red Sand Dunes DXB" },
       { name: "theme-color", content: "#D4A017" },
       { property: "og:site_name", content: "Red Sand Dunes DXB" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "apple-mobile-web-app-title",
+        content: "Red Sand Dunes DXB",
+      },
     ],
+
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" },
+
+      {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap",
+      },
+
+      // Favicons
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "96x96",
+        href: "/favicon-96x96.png",
+      },
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/favicon.svg",
+      },
+      {
+        rel: "shortcut icon",
+        href: "/favicon.ico",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/apple-touch-icon.png",
+      },
+      {
+        rel: "manifest",
+        href: "/site.webmanifest",
+      },
     ],
-    scripts: [{
-      type: "application/ld+json",
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "TravelAgency",
-        name: "Red Sand Dunes DXB",
-        description: "Luxury desert safari and city tour operator in Dubai.",
-        areaServed: "Dubai, United Arab Emirates",
-      }),
-    }],
+
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "TravelAgency",
+          name: "Red Sand Dunes DXB",
+          description: "Luxury desert safari and city tour operator in Dubai.",
+          areaServed: "Dubai, United Arab Emirates",
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
