@@ -28,7 +28,7 @@ function AboutPage() {
             <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium">Our story</p>
             <h2 className="mt-2 font-display text-4xl md:text-5xl font-bold">Rooted in Bedouin tradition. Built for modern travellers.</h2>
             <p className="mt-5 text-muted-foreground leading-relaxed">
-              Red Sand Dunes DXB was founded in 2013 by a small group of Emirati desert guides with one belief —
+              Red Sand Dunes DXB was founded in 2011 by a small group of Emirati desert guides with one belief —
               the desert should be experienced, not just visited. Today we host travellers from over 80
               countries, blending traditional Arabian hospitality with the comfort and safety of a modern tour
               operator.

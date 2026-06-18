@@ -151,7 +151,7 @@ function Home() {
               climb to the last star you count, every moment is yours.
             </p>
             <ul className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
-              {["Licensed by Dubai Tourism","10+ years experience","Professional safety-trained drivers","All-inclusive luxury camps"].map((t)=>(
+              {["Licensed by Dubai Tourism", "15+ years experience", "Professional safety-trained drivers", "All-inclusive luxury camps"].map((t) => (
                 <li key={t} className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> {t}</li>
               ))}
             </ul>
@@ -163,7 +163,7 @@ function Home() {
             <div className="relative">
               <img src={hero2} alt="Bedouin camp" width={800} height={600} loading="lazy" className="rounded-2xl shadow-2xl" />
               <div className="absolute -bottom-6 -left-6 hidden md:block glass rounded-2xl p-5 shadow-xl">
-                <div className="flex gap-1 text-primary">{Array.from({length:5}).map((_,i)=><Star key={i} className="h-4 w-4 fill-current" />)}</div>
+                <div className="flex gap-1 text-primary">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}</div>
                 <p className="mt-2 text-sm font-semibold">4.9 / 5 — 2,300+ reviews</p>
               </div>
             </div>
@@ -177,17 +177,52 @@ function Home() {
           {[
             [Users, "25,000+", "Happy Travellers"],
             [Award, "8,500+", "Tours Completed"],
-            [Clock, "12", "Years of Adventure"],
+            [Clock, "15", "Years of Adventure"],
             [Star, "98%", "Satisfaction Rate"],
           ].map(([Icon, num, label]: any, i) => (
-            <Reveal key={i} delay={i*0.08}>
+            <Reveal key={i} delay={i * 0.08}>
               <div className="grid place-items-center">
                 <Icon className="h-8 w-8 text-primary" />
                 <div className="mt-3 font-display text-4xl md:text-5xl font-bold text-yellow-400">{num}</div>
-                  <div className="text-black text-sm mt-1">{label}</div>
+                <div className="text-black text-sm mt-1">{label}</div>
               </div>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="section-pad">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          <Reveal>
+            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Our services</p>
+            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">Every Way to Experience the Desert</h2>
+          </Reveal>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {SERVICES.map((s, i) => (
+              <Reveal key={s.title} delay={i * 0.05}>
+                <div className="group relative overflow-hidden rounded-2xl bg-card border border-border hover-lift">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  </div>
+                  <div className="p-5">
+                    <div className="flex items-center gap-2">
+                      <s.icon className="h-5 w-5 text-primary" />
+                      <h3 className="font-display text-lg font-bold">{s.title}</h3>
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{s.desc}</p>
+                    <div className="mt-5">
+                      <BookingDialog defaultPackage={s.title}>
+                        <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                          Book Now
+                        </Button>
+                      </BookingDialog>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -201,14 +236,31 @@ function Home() {
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {packages.map((p, i) => (
-              <Reveal key={p.id} delay={i*0.06}>
+              <Reveal key={p.id} delay={i * 0.06}>
                 <article className="group relative overflow-hidden rounded-2xl bg-card shadow-md hover-lift">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img src={p.image_url || hero1} alt={p.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                  </div>
+                  <Link
+                    to="/packages/$slug"
+                    params={{ slug: p.slug }}
+                    className="block aspect-[4/3] overflow-hidden"
+                  >
+                    <img
+                      src={p.image_url || hero1}
+                      alt={p.title}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  </Link>
                   <div className="p-6">
                     <div className="flex items-center justify-between gap-3">
-                      <h3 className="font-display text-xl font-bold">{p.title}</h3>
+                      <h3 className="font-display text-xl font-bold">
+                        <Link
+                          to="/packages/$slug"
+                          params={{ slug: p.slug }}
+                          className="hover:text-primary transition-colors"
+                        >
+                          {p.title}
+                        </Link>
+                      </h3>
                       <div className="text-right shrink-0">
                         <div className="text-2xl font-bold text-primary">AED {p.price}</div>
                         <div className="text-xs text-muted-foreground">per person</div>
@@ -220,11 +272,18 @@ function Home() {
                     </div>
                     <div className="mt-5 flex gap-2">
                       <BookingDialog defaultPackage={p.title}>
-                        <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90">Book Now</Button>
+                        <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90">
+                          Book Now
+                        </Button>
                       </BookingDialog>
-                      <a href={waLink(`Hi, I'm interested in: ${p.title}`)} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" size="icon" aria-label="WhatsApp"><MessageCircle className="h-4 w-4" /></Button>
-                      </a>
+
+                      <Link
+                        to="/packages/$slug"
+                        params={{ slug: p.slug }}
+                        className="inline-flex items-center text-sm font-semibold text-primary hover:underline whitespace-nowrap"
+                      >
+                        View Details
+                      </Link>
                     </div>
                   </div>
                 </article>
@@ -237,39 +296,7 @@ function Home() {
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="section-pad">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
-          <Reveal>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Our services</p>
-            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">Every Way to Experience the Desert</h2>
-          </Reveal>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {SERVICES.map((s, i) => (
-              <Reveal key={s.title} delay={i*0.05}>
-                <div className="group relative overflow-hidden rounded-2xl bg-card border border-border hover-lift">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2">
-                      <s.icon className="h-5 w-5 text-primary" />
-                      <h3 className="font-display text-lg font-bold">{s.title}</h3>
-                    </div>
-                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{s.desc}</p>
-                    <div className="mt-3 flex items-center justify-between">
-                      <div className="text-sm">From <span className="font-bold text-primary">AED {s.price}</span></div>
-                      <BookingDialog defaultPackage={s.title}>
-                        <button className="text-sm font-semibold text-primary story-link">Book</button>
-                      </BookingDialog>
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* VIDEO */}
       <section className="section-pad bg-[var(--gradient-night)]">
@@ -305,7 +332,7 @@ function Home() {
               <motion.img
                 key={i}
                 src={src}
-                alt={`Desert moment ${i+1}`}
+                alt={`Desert moment ${i + 1}`}
                 loading="lazy"
                 whileHover={{ scale: 1.02 }}
                 className="w-full rounded-xl shadow-md break-inside-avoid cursor-zoom-in"
@@ -322,29 +349,63 @@ function Home() {
             <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Travellers say</p>
             <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">Five-Star Stories</h2>
           </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {(reviews.length ? reviews : Array.from({length:3}).map((_,i)=>({
-              id: i,
-              name: ["Sophie L.","Rajat K.","Emma W."][i],
-              country: ["France","India","UK"][i],
-              rating: 5,
-              comment: [
-                "Best day of our Dubai trip. The dune bashing was thrilling and the camp dinner was magical.",
-                "World-class service from pickup to drop-off. The VIP package was worth every dirham.",
-                "Stars, fire, music — pure desert magic. Our guide Hamad was unforgettable.",
-              ][i],
-            }))).slice(0,3).map((r:any, i)=>(
-              <Reveal key={r.id} delay={i*0.08}>
-                <div className="rounded-2xl bg-card p-7 shadow-md h-full flex flex-col">
-                  <div className="flex gap-1 text-primary">{Array.from({length:r.rating}).map((_,k)=><Star key={k} className="h-4 w-4 fill-current" />)}</div>
-                  <p className="mt-4 text-foreground/90 italic flex-1">"{r.comment}"</p>
-                  <div className="mt-5">
-                    <div className="font-semibold">{r.name}</div>
-                    <div className="text-xs text-muted-foreground">{r.country}</div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {
+              (reviews.length
+                ? reviews
+                : Array.from({ length: 6 }).map((_, i) => ({
+                  id: i,
+                  name: [
+                    "Michael Anderson",
+                    "Priya Sharma",
+                    "Sarah Williams",
+                    "Ahmed Al Mansoori",
+                    "James Carter",
+                    "Olivia Bennett",
+                  ][i],
+                  country: [
+                    "United States",
+                    "India",
+                    "United Kingdom",
+                    "United Arab Emirates",
+                    "Australia",
+                    "Canada",
+                  ][i],
+                  rating: 5,
+                  comment: [
+                    "Best day of our Dubai trip. The dune bashing was thrilling and the camp dinner was magical.",
+                    "World-class service from pickup to drop-off. The VIP package was worth every dirham.",
+                    "Stars, fire, music and amazing food. Our guide made the entire experience unforgettable.",
+                    "Excellent organization and very professional drivers. The sunset views over the red dunes were breathtaking.",
+                    "The dune buggy adventure exceeded all expectations. Everything was safe, exciting, and well managed.",
+                    "From hotel pickup to the final fire show, every detail was perfect. Highly recommended for families and couples.",
+                  ][i],
+                }))
+              )
+                .slice(0, 6)
+                .map((r: any, i) => (
+                  <Reveal key={r.id} delay={i * 0.08}>
+                    <div className="rounded-2xl bg-card p-7 shadow-md h-full flex flex-col">
+                      <div className="flex gap-1 text-primary">
+                        {Array.from({ length: r.rating }).map((_, k) => (
+                          <Star key={k} className="h-4 w-4 fill-current" />
+                        ))}
+                      </div>
+
+                      <p className="mt-4 text-foreground/90 italic flex-1">
+                        "{r.comment}"
+                      </p>
+
+                      <div className="mt-5">
+                        <div className="font-semibold">{r.name}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {r.country}
+                        </div>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))
+            }
           </div>
         </div>
       </section>
@@ -359,8 +420,8 @@ function Home() {
             </Reveal>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
               {blogs.map((b, i) => (
-                <Reveal key={b.id} delay={i*0.08}>
-                  <Link to="/blog/$slug" params={{slug: b.slug}} className="group block rounded-2xl overflow-hidden bg-card shadow-md hover-lift">
+                <Reveal key={b.id} delay={i * 0.08}>
+                  <Link to="/blog/$slug" params={{ slug: b.slug }} className="group block rounded-2xl overflow-hidden bg-card shadow-md hover-lift">
                     <div className="aspect-[4/3] overflow-hidden">
                       <img src={b.cover_image || hero1} alt={b.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
                     </div>
