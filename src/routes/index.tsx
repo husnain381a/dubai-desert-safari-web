@@ -2,14 +2,28 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ChevronRight, Star, Users, Award, Clock, ShieldCheck, MessageCircle,
-  Mountain, Building2, Bike, Sparkles, Sunset, Sunrise, Moon, Crown,
+  ChevronRight,
+  Star,
+  Users,
+  Award,
+  Clock,
+  ShieldCheck,
+  MessageCircle,
+  Mountain,
+  Building2,
+  Bike,
+  Sparkles,
+  Sunset,
+  Sunrise,
+  Moon,
+  Crown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { BookingDialog } from "@/components/site/BookingDialog";
 import { waLink, SITE } from "@/lib/site";
+import { formatAED, getPackagePricing } from "@/lib/pricing";
 import { supabase } from "@/integrations/supabase/client";
 
 import hero1 from "@/assets/hero-dunes.jpg";
@@ -35,9 +49,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Red Sand Dunes DXB — Luxury Desert Safari Dubai" },
-      { name: "description", content: "Award-winning desert safaris, dune bashing, BBQ camps, dune buggies and Dubai city tours. Premium experiences. Book online today." },
+      {
+        name: "description",
+        content:
+          "Award-winning desert safaris, dune bashing, BBQ camps, dune buggies and Dubai city tours. Premium experiences. Book online today.",
+      },
       { property: "og:title", content: "Red Sand Dunes DXB — Luxury Desert Safari Dubai" },
-      { property: "og:description", content: "Premium desert safaris in Dubai. Dune bashing, BBQ camps, city tours and more." },
+      {
+        property: "og:description",
+        content: "Premium desert safaris in Dubai. Dune bashing, BBQ camps, city tours and more.",
+      },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -46,21 +67,89 @@ export const Route = createFileRoute("/")({
 });
 
 const HERO = [
-  { img: hero1, eyebrow: "Welcome to the Arabian wild", title: "Where Red Dunes Meet Luxury", sub: "Premium desert safari experiences hand-crafted in Dubai." },
-  { img: hero2, eyebrow: "Stars above, fire below", title: "Bedouin Camps Under the Milky Way", sub: "Live music, BBQ feasts and starlit silence." },
-  { img: hero3, eyebrow: "Adrenaline meets the desert", title: "Heart-Racing Dune Bashing", sub: "Pro drivers. Top-spec 4×4s. Unforgettable rides." },
-  { img: hero4, eyebrow: "Timeless Arabian beauty", title: "Sunset Camel Caravans", sub: "Walk in the footsteps of the Bedouins." },
+  {
+    img: hero1,
+    eyebrow: "Welcome to the Arabian wild",
+    title: "Where Red Dunes Meet Luxury",
+    sub: "Premium desert safari experiences hand-crafted in Dubai.",
+  },
+  {
+    img: hero2,
+    eyebrow: "Stars above, fire below",
+    title: "Bedouin Camps Under the Milky Way",
+    sub: "Live music, BBQ feasts and starlit silence.",
+  },
+  {
+    img: hero3,
+    eyebrow: "Adrenaline meets the desert",
+    title: "Heart-Racing Dune Bashing",
+    sub: "Pro drivers. Top-spec 4×4s. Unforgettable rides.",
+  },
+  {
+    img: hero4,
+    eyebrow: "Timeless Arabian beauty",
+    title: "Sunset Camel Caravans",
+    sub: "Walk in the footsteps of the Bedouins.",
+  },
 ];
 
 const SERVICES = [
-  { icon: Sunset, img: svcEvening, title: "Evening Desert Safari", desc: "Dune bashing, BBQ dinner & live shows.", price: 45 },
-  { icon: Sunrise, img: svcMorning, title: "Morning Desert Safari", desc: "Cooler mornings, sandboarding and quad add-ons.", price: 35 },
-  { icon: Moon, img: svcOvernight, title: "Overnight Safari", desc: "Sleep under the stars in a luxury Bedouin camp.", price: 120 },
-  { icon: Crown, img: svcVip, title: "VIP Premium Safari", desc: "Private 4×4, candlelit dinner, royal treatment.", price: 250 },
-  { icon: Building2, img: svcCity, title: "Dubai City Tour", desc: "Burj Khalifa, marinas, souks & old Dubai.", price: 60 },
-  { icon: Building2, img: svcAd, title: "Abu Dhabi City Tour", desc: "Grand Mosque, Emirates Palace, Corniche.", price: 90 },
-  { icon: Bike, img: svcBuggy, title: "Dune Buggy Adventure", desc: "Roar across the dunes in a 4-seater buggy.", price: 180 },
-  { icon: Mountain, img: svcQuad, title: "Quad Bike Ride", desc: "30 / 60-minute self-drive ATV experiences.", price: 50 },
+  {
+    icon: Sunset,
+    img: svcEvening,
+    title: "Evening Desert Safari",
+    desc: "Dune bashing, BBQ dinner & live shows.",
+    price: 45,
+  },
+  {
+    icon: Sunrise,
+    img: svcMorning,
+    title: "Morning Desert Safari",
+    desc: "Cooler mornings, sandboarding and quad add-ons.",
+    price: 35,
+  },
+  {
+    icon: Moon,
+    img: svcOvernight,
+    title: "Overnight Safari",
+    desc: "Sleep under the stars in a luxury Bedouin camp.",
+    price: 120,
+  },
+  {
+    icon: Crown,
+    img: svcVip,
+    title: "VIP Premium Safari",
+    desc: "Private 4×4, candlelit dinner, royal treatment.",
+    price: 250,
+  },
+  {
+    icon: Building2,
+    img: svcCity,
+    title: "Dubai City Tour",
+    desc: "Burj Khalifa, marinas, souks & old Dubai.",
+    price: 60,
+  },
+  {
+    icon: Building2,
+    img: svcAd,
+    title: "Abu Dhabi City Tour",
+    desc: "Grand Mosque, Emirates Palace, Corniche.",
+    price: 90,
+  },
+  {
+    icon: Bike,
+    img: svcBuggy,
+    title: "Dune Buggy Adventure",
+    desc: "Roar across the dunes in a 4-seater buggy.",
+    price: 180,
+  },
+  {
+    icon: Mountain,
+    img: svcQuad,
+    title: "Quad Bike Ride",
+    desc: "30 / 60-minute self-drive ATV experiences.",
+    price: 50,
+  },
 ];
 
 const GALLERY = [g1, g2, g3, g4, g5, g6];
@@ -76,9 +165,26 @@ function Home() {
   const [reviews, setReviews] = useState<any[]>([]);
   const [blogs, setBlogs] = useState<any[]>([]);
   useEffect(() => {
-    supabase.from("packages").select("*").eq("featured", true).order("sort_order").limit(6).then(({ data }) => setPackages(data ?? []));
-    supabase.from("testimonials").select("*").eq("approved", true).limit(6).then(({ data }) => setReviews(data ?? []));
-    supabase.from("blogs").select("*").eq("published", true).order("published_at", { ascending: false }).limit(3).then(({ data }) => setBlogs(data ?? []));
+    supabase
+      .from("packages")
+      .select("*")
+      .eq("featured", true)
+      .order("sort_order")
+      .limit(6)
+      .then(({ data }) => setPackages(data ?? []));
+    supabase
+      .from("testimonials")
+      .select("*")
+      .eq("approved", true)
+      .limit(6)
+      .then(({ data }) => setReviews(data ?? []));
+    supabase
+      .from("blogs")
+      .select("*")
+      .eq("published", true)
+      .order("published_at", { ascending: false })
+      .limit(3)
+      .then(({ data }) => setBlogs(data ?? []));
   }, []);
 
   return (
@@ -109,17 +215,32 @@ function Home() {
               transition={{ duration: 0.7 }}
               className="max-w-3xl"
             >
-              <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium">{HERO[slide].eyebrow}</p>
-              <h1 className="mt-4 font-display text-5xl md:text-7xl font-bold leading-[1.05]">{HERO[slide].title}</h1>
+              <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium">
+                {HERO[slide].eyebrow}
+              </p>
+              <h1 className="mt-4 font-display text-5xl md:text-7xl font-bold leading-[1.05]">
+                {HERO[slide].title}
+              </h1>
               <p className="mt-5 max-w-xl text-lg text-white/85">{HERO[slide].sub}</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <BookingDialog>
-                  <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl shadow-primary/30">
+                  <Button
+                    size="lg"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl shadow-primary/30"
+                  >
                     Book Now <ChevronRight className="h-4 w-4" />
                   </Button>
                 </BookingDialog>
-                <a href={waLink("Hello, I'd like to book a desert safari.")} target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" variant="outline" className="border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20">
+                <a
+                  href={waLink("Hello, I'd like to book a desert safari.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20"
+                  >
                     <MessageCircle className="h-4 w-4" /> WhatsApp Us
                   </Button>
                 </a>
@@ -144,26 +265,49 @@ function Home() {
         <div className="mx-auto max-w-7xl px-4 md:px-6 grid gap-10 lg:grid-cols-2 items-center">
           <Reveal>
             <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium">About us</p>
-            <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold">Dubai's most loved desert storytellers</h2>
+            <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold">
+              Dubai's most loved desert storytellers
+            </h2>
             <p className="mt-5 text-muted-foreground text-lg leading-relaxed">
               For over a decade, Red Sand Dunes DXB has guided travellers across the red Arabian
-              landscape — pairing Bedouin tradition with five-star hospitality. From the first dune you
-              climb to the last star you count, every moment is yours.
+              landscape — pairing Bedouin tradition with five-star hospitality. From the first dune
+              you climb to the last star you count, every moment is yours.
             </p>
             <ul className="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
-              {["Licensed by Dubai Tourism", "15+ years experience", "Professional safety-trained drivers", "All-inclusive luxury camps"].map((t) => (
-                <li key={t} className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-primary" /> {t}</li>
+              {[
+                "Licensed by Dubai Tourism",
+                "15+ years experience",
+                "Professional safety-trained drivers",
+                "All-inclusive luxury camps",
+              ].map((t) => (
+                <li key={t} className="flex items-center gap-2">
+                  <ShieldCheck className="h-5 w-5 text-primary" /> {t}
+                </li>
               ))}
             </ul>
-            <Link to="/about" className="mt-7 inline-flex items-center gap-2 text-primary font-semibold story-link">
+            <Link
+              to="/about"
+              className="mt-7 inline-flex items-center gap-2 text-primary font-semibold story-link"
+            >
               Discover our story <ChevronRight className="h-4 w-4" />
             </Link>
           </Reveal>
           <Reveal delay={0.15}>
             <div className="relative">
-              <img src={hero2} alt="Bedouin camp" width={800} height={600} loading="lazy" className="rounded-2xl shadow-2xl" />
+              <img
+                src={hero2}
+                alt="Bedouin camp"
+                width={800}
+                height={600}
+                loading="lazy"
+                className="rounded-2xl shadow-2xl"
+              />
               <div className="absolute -bottom-6 -left-6 hidden md:block glass rounded-2xl p-5 shadow-xl">
-                <div className="flex gap-1 text-primary">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}</div>
+                <div className="flex gap-1 text-primary">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
                 <p className="mt-2 text-sm font-semibold">4.9 / 5 — 2,300+ reviews</p>
               </div>
             </div>
@@ -183,7 +327,9 @@ function Home() {
             <Reveal key={i} delay={i * 0.08}>
               <div className="grid place-items-center">
                 <Icon className="h-8 w-8 text-primary" />
-                <div className="mt-3 font-display text-4xl md:text-5xl font-bold text-yellow-400">{num}</div>
+                <div className="mt-3 font-display text-4xl md:text-5xl font-bold text-yellow-400">
+                  {num}
+                </div>
                 <div className="text-black text-sm mt-1">{label}</div>
               </div>
             </Reveal>
@@ -195,15 +341,24 @@ function Home() {
       <section className="section-pad">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <Reveal>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Our services</p>
-            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">Every Way to Experience the Desert</h2>
+            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">
+              Our services
+            </p>
+            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">
+              Every Way to Experience the Desert
+            </h2>
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {SERVICES.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.05}>
                 <div className="group relative overflow-hidden rounded-2xl bg-card border border-border hover-lift">
                   <div className="aspect-[4/3] overflow-hidden">
-                    <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img
+                      src={s.img}
+                      alt={s.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
                   </div>
                   <div className="p-5">
                     <div className="flex items-center gap-2">
@@ -230,9 +385,15 @@ function Home() {
       <section className="section-pad bg-[var(--gradient-sand)]">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <Reveal>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Featured packages</p>
-            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">Hand-Picked Desert Escapes</h2>
-            <p className="mt-3 text-center text-muted-foreground max-w-2xl mx-auto">Our most-booked, most-loved experiences — fully inclusive and ready to book.</p>
+            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">
+              Featured packages
+            </p>
+            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">
+              Hand-Picked Desert Escapes
+            </h2>
+            <p className="mt-3 text-center text-muted-foreground max-w-2xl mx-auto">
+              Our most-booked, most-loved experiences — fully inclusive and ready to book.
+            </p>
           </Reveal>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {packages.map((p, i) => (
@@ -262,7 +423,12 @@ function Home() {
                         </Link>
                       </h3>
                       <div className="text-right shrink-0">
-                        <div className="text-2xl font-bold text-primary">AED {p.price}</div>
+                        <div className="text-sm text-muted-foreground line-through">
+                          {formatAED(getPackagePricing(p).originalPrice)}
+                        </div>
+                        <div className="text-2xl font-bold text-primary">
+                          {formatAED(getPackagePricing(p).discountedPrice)}
+                        </div>
                         <div className="text-xs text-muted-foreground">per person</div>
                       </div>
                     </div>
@@ -291,19 +457,25 @@ function Home() {
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Link to="/packages"><Button variant="outline" size="lg">View all packages <ChevronRight className="h-4 w-4" /></Button></Link>
+            <Link to="/packages">
+              <Button variant="outline" size="lg">
+                View all packages <ChevronRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
-
-
 
       {/* VIDEO */}
       <section className="section-pad bg-[var(--gradient-night)]">
         <div className="mx-auto max-w-5xl px-4 md:px-6 text-center">
           <Reveal>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium">Watch & be inspired</p>
-            <h2 className="mt-2 font-display text-4xl md:text-5xl font-bold">A Glimpse of the Magic</h2>
+            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium">
+              Watch & be inspired
+            </p>
+            <h2 className="mt-2 font-display text-4xl md:text-5xl font-bold">
+              A Glimpse of the Magic
+            </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="mt-10 aspect-video overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
@@ -324,8 +496,12 @@ function Home() {
       <section className="section-pad">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <Reveal>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Gallery</p>
-            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">Moments from the Dunes</h2>
+            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">
+              Gallery
+            </p>
+            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">
+              Moments from the Dunes
+            </h2>
           </Reveal>
           <div className="mt-12 columns-2 md:columns-3 gap-4 [&>*]:mb-4">
             {GALLERY.map((src, i) => (
@@ -346,14 +522,17 @@ function Home() {
       <section className="section-pad bg-[var(--gradient-sand)]">
         <div className="mx-auto max-w-7xl px-4 md:px-6">
           <Reveal>
-            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Travellers say</p>
-            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">Five-Star Stories</h2>
+            <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">
+              Travellers say
+            </p>
+            <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">
+              Five-Star Stories
+            </h2>
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {
-              (reviews.length
-                ? reviews
-                : Array.from({ length: 6 }).map((_, i) => ({
+            {(reviews.length
+              ? reviews
+              : Array.from({ length: 6 }).map((_, i) => ({
                   id: i,
                   name: [
                     "Michael Anderson",
@@ -381,31 +560,26 @@ function Home() {
                     "From hotel pickup to the final fire show, every detail was perfect. Highly recommended for families and couples.",
                   ][i],
                 }))
-              )
-                .slice(0, 6)
-                .map((r: any, i) => (
-                  <Reveal key={r.id} delay={i * 0.08}>
-                    <div className="rounded-2xl bg-card p-7 shadow-md h-full flex flex-col">
-                      <div className="flex gap-1 text-primary">
-                        {Array.from({ length: r.rating }).map((_, k) => (
-                          <Star key={k} className="h-4 w-4 fill-current" />
-                        ))}
-                      </div>
-
-                      <p className="mt-4 text-foreground/90 italic flex-1">
-                        "{r.comment}"
-                      </p>
-
-                      <div className="mt-5">
-                        <div className="font-semibold">{r.name}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {r.country}
-                        </div>
-                      </div>
+            )
+              .slice(0, 6)
+              .map((r: any, i) => (
+                <Reveal key={r.id} delay={i * 0.08}>
+                  <div className="rounded-2xl bg-card p-7 shadow-md h-full flex flex-col">
+                    <div className="flex gap-1 text-primary">
+                      {Array.from({ length: r.rating }).map((_, k) => (
+                        <Star key={k} className="h-4 w-4 fill-current" />
+                      ))}
                     </div>
-                  </Reveal>
-                ))
-            }
+
+                    <p className="mt-4 text-foreground/90 italic flex-1">"{r.comment}"</p>
+
+                    <div className="mt-5">
+                      <div className="font-semibold">{r.name}</div>
+                      <div className="text-xs text-muted-foreground">{r.country}</div>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
           </div>
         </div>
       </section>
@@ -415,21 +589,40 @@ function Home() {
         <section className="section-pad">
           <div className="mx-auto max-w-7xl px-4 md:px-6">
             <Reveal>
-              <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">Latest stories</p>
-              <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">From the Journal</h2>
+              <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium text-center">
+                Latest stories
+              </p>
+              <h2 className="mt-2 text-center font-display text-4xl md:text-5xl font-bold">
+                From the Journal
+              </h2>
             </Reveal>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
               {blogs.map((b, i) => (
                 <Reveal key={b.id} delay={i * 0.08}>
-                  <Link to="/blog/$slug" params={{ slug: b.slug }} className="group block rounded-2xl overflow-hidden bg-card shadow-md hover-lift">
+                  <Link
+                    to="/blog/$slug"
+                    params={{ slug: b.slug }}
+                    className="group block rounded-2xl overflow-hidden bg-card shadow-md hover-lift"
+                  >
                     <div className="aspect-[4/3] overflow-hidden">
-                      <img src={b.cover_image || hero1} alt={b.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
+                      <img
+                        src={b.cover_image || hero1}
+                        alt={b.title}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
                     </div>
                     <div className="p-5">
-                      <div className="text-xs uppercase tracking-wider text-primary font-medium">{b.category}</div>
-                      <h3 className="mt-1 font-display text-xl font-bold line-clamp-2">{b.title}</h3>
+                      <div className="text-xs uppercase tracking-wider text-primary font-medium">
+                        {b.category}
+                      </div>
+                      <h3 className="mt-1 font-display text-xl font-bold line-clamp-2">
+                        {b.title}
+                      </h3>
                       <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{b.excerpt}</p>
-                      <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">Read more <ChevronRight className="h-4 w-4" /></span>
+                      <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary">
+                        Read more <ChevronRight className="h-4 w-4" />
+                      </span>
                     </div>
                   </Link>
                 </Reveal>
@@ -448,14 +641,27 @@ function Home() {
         <div className="mx-auto max-w-5xl px-4 md:px-6 text-white">
           <Reveal>
             <Sparkles className="h-8 w-8 text-primary" />
-            <h2 className="mt-3 font-display text-4xl md:text-6xl font-bold">Your Arabian story starts at sunset.</h2>
-            <p className="mt-4 text-white/85 text-lg max-w-2xl">Reserve your spot today — limited seats per camp to keep every experience intimate.</p>
+            <h2 className="mt-3 font-display text-4xl md:text-6xl font-bold">
+              Your Arabian story starts at sunset.
+            </h2>
+            <p className="mt-4 text-white/85 text-lg max-w-2xl">
+              Reserve your spot today — limited seats per camp to keep every experience intimate.
+            </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <BookingDialog>
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl">Book Now</Button>
+                <Button
+                  size="lg"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-xl"
+                >
+                  Book Now
+                </Button>
               </BookingDialog>
               <a href={waLink()} target="_blank" rel="noopener noreferrer">
-                <Button size="lg" variant="outline" className="border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white/40 bg-white/10 text-white backdrop-blur hover:bg-white/20"
+                >
                   <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
                 </Button>
               </a>
