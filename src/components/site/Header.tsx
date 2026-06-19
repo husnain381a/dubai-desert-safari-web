@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,9 +19,7 @@ const NAV = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [pathname, setPathname] = useState<string>(() =>
-    typeof window !== "undefined" ? window.location?.pathname ?? "/" : "/"
-  );
+  const pathname = useLocation({ select: (location) => location.pathname });
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
     on();
@@ -29,12 +27,10 @@ export function Header() {
     return () => window.removeEventListener("scroll", on);
   }, []);
 
-  useEffect(() => {
-    setPathname(window.location?.pathname ?? "/");
-  }, []);
   const isBlogRead = /^\/blog\/.+/.test(pathname);
+  const isPackageDetail = /^\/packages\/.+/.test(pathname);
   const isAuth = pathname === "/auth";
-  const darkText = scrolled || isBlogRead || isAuth;
+  const darkText = scrolled || isBlogRead || isPackageDetail || isAuth;
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
@@ -44,17 +40,21 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
         <Link to="/" className="flex items-center gap-2.5 min-w-0">
           <img
-            src={scrolled || isAuth ? logo1 : logo2}
+            src={scrolled || isPackageDetail || isAuth ? logo1 : logo2}
             alt="Red Sand Dunes DXB"
             width={40}
             height={40}
             className="h-25 w-25 shrink-0"
           />
           <div className="sm:block leading-tight">
-            <div className={`font-display text-lg font-bold ${darkText ? "text-foreground" : "text-white"}`}>
+            <div
+              className={`font-display text-lg font-bold ${darkText ? "text-foreground" : "text-white"}`}
+            >
               Red Sand Dunes
             </div>
-            <div className={`text-[10px] uppercase tracking-[0.2em] ${darkText ? "text-muted-foreground" : "text-white/80"}`}>
+            <div
+              className={`text-[10px] uppercase tracking-[0.2em] ${darkText ? "text-muted-foreground" : "text-white/80"}`}
+            >
               Dubai · UAE
             </div>
           </div>
@@ -76,7 +76,10 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <a href={`tel:${SITE.phone}`} className={`hidden md:inline-flex items-center gap-1.5 text-sm font-medium ${darkText ? "text-foreground" : "text-white"}`}>
+          <a
+            href={`tel:${SITE.phone}`}
+            className={`hidden md:inline-flex items-center gap-1.5 text-sm font-medium ${darkText ? "text-foreground" : "text-white"}`}
+          >
             <Phone className="h-4 w-4" /> {SITE.phone}
           </a>
           <BookingDialog>
