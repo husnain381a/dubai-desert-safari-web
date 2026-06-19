@@ -21,7 +21,7 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return (
     <SiteLayout>
-      <PageHero title="Our Story" subtitle="A decade of guiding travellers across the golden Arabian wild." image={hero} />
+      <PageHero title="Our Story" subtitle="A decade of guiding travellers across the red Arabian wild." image={hero} />
       <section className="section-pad">
         <div className="mx-auto max-w-7xl px-4 md:px-6 grid gap-12 lg:grid-cols-2 items-center">
           <Reveal>

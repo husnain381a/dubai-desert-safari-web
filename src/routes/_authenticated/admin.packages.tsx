@@ -105,7 +105,7 @@ function PackagesAdmin() {
             <img src={p.image_url} alt="" className="h-16 w-16 rounded-lg object-cover" />
             <div className="flex-1 min-w-[200px]">
               <div className="font-semibold">{p.title}</div>
-              <div className="text-sm text-muted-foreground">${p.price} · {p.duration} · {p.category}</div>
+              <div className="text-sm text-muted-foreground">AED {p.price} · {p.duration} · {p.category}</div>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <span className="text-muted-foreground">Published</span>
@@ -137,7 +137,7 @@ function PackagesAdmin() {
                 <Input value={editing.slug} onChange={(e) => setEditing({ ...editing, slug: e.target.value })} />
               </div>
               <div>
-                <Label>Price (USD)</Label>
+                <Label>Price (AED)</Label>
                 <Input type="number" value={editing.price} onChange={(e) => setEditing({ ...editing, price: Number(e.target.value) })} />
               </div>
               <div>

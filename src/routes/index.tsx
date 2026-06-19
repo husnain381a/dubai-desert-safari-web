@@ -46,7 +46,7 @@ export const Route = createFileRoute("/")({
 });
 
 const HERO = [
-  { img: hero1, eyebrow: "Welcome to the Arabian wild", title: "Where Golden Dunes Meet Luxury", sub: "Premium desert safari experiences hand-crafted in Dubai." },
+  { img: hero1, eyebrow: "Welcome to the Arabian wild", title: "Where Red Dunes Meet Luxury", sub: "Premium desert safari experiences hand-crafted in Dubai." },
   { img: hero2, eyebrow: "Stars above, fire below", title: "Bedouin Camps Under the Milky Way", sub: "Live music, BBQ feasts and starlit silence." },
   { img: hero3, eyebrow: "Adrenaline meets the desert", title: "Heart-Racing Dune Bashing", sub: "Pro drivers. Top-spec 4×4s. Unforgettable rides." },
   { img: hero4, eyebrow: "Timeless Arabian beauty", title: "Sunset Camel Caravans", sub: "Walk in the footsteps of the Bedouins." },
@@ -146,7 +146,7 @@ function Home() {
             <p className="text-sm uppercase tracking-[0.3em] text-primary font-medium">About us</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl font-bold">Dubai's most loved desert storytellers</h2>
             <p className="mt-5 text-muted-foreground text-lg leading-relaxed">
-              For over a decade, Red Sand Dunes DXB has guided travellers across the golden Arabian
+              For over a decade, Red Sand Dunes DXB has guided travellers across the red Arabian
               landscape — pairing Bedouin tradition with five-star hospitality. From the first dune you
               climb to the last star you count, every moment is yours.
             </p>
