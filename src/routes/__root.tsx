@@ -18,9 +18,7 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="font-display text-7xl font-bold gradient-text">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">
-          Page not found
-        </h2>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
           The page you're looking for doesn't exist or has been moved.
         </p>
@@ -37,13 +35,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
+function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
 
   const router = useRouter();
@@ -61,9 +53,7 @@ function ErrorComponent({
           This page didn't load
         </h1>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong. Try refreshing.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Something went wrong. Try refreshing.</p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -159,8 +149,7 @@ export const Route = createRootRouteWithContext<{
 
       {
         name: "twitter:description",
-        content:
-          "Book premium desert safari experiences in Dubai with Red Sand Dunes DXB.",
+        content: "Book premium desert safari experiences in Dubai with Red Sand Dunes DXB.",
       },
 
       {
@@ -204,15 +193,21 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-960HCELD6N"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
 
-          gtag('config', 'G-960HCELD6N');
-        </script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-960HCELD6N', {
+        page_path: window.location.pathname,
+      });
+    `,
+          }}
+        ></script>
         <HeadContent />
 
         <script
@@ -224,8 +219,7 @@ function RootShell({ children }: { children: ReactNode }) {
               name: "Red Sand Dunes DXB",
               url: "https://redsanddunesdxb.com",
               image: "https://redsanddunesdxb.com/og-image.jpg",
-              description:
-                "Luxury desert safari and city tour operator in Dubai",
+              description: "Luxury desert safari and city tour operator in Dubai",
             }),
           }}
         />
