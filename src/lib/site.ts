@@ -7,9 +7,9 @@ export const SITE = {
   whatsappDisplay: "+971 58 272 5970",
   email: "info@redsanddunesdxb.com",
   phone: "+971 58 272 5970",
-  address: "Business Bay, Dubai, UAE",
+  address: "Trade Center First, Dubai, UAE",
   mapEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28884.93785936424!2d55.2718197!3d25.1823992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f682def25f457%3A0x3dd4c4097970950e!2sBusiness%20Bay%20-%20Dubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2s!4v1781345532879!5m2!1sen!2s",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.8636058280767!2d55.2706273!3d25.207821799999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43005d25fb79%3A0xb4d1ebe1f32d26a2!2sRed%20Sand%20Dunes%20DXB!5e0!3m2!1sen!2s!4v1782072134466!5m2!1sen!2s",
   socials: {
     instagram: "https://www.instagram.com/redsanddunesdxb/",
     facebook: "https://www.facebook.com/profile.php?id=61589483815038",
