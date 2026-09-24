@@ -3,7 +3,6 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { WhatsAppFloating } from "./WhatsAppButton";
 import { Toaster } from "@/components/ui/sonner";
-import { SummerOfferPopup } from "./SummerOfferPopup";
 
 export function SiteLayout({ children }: { children: ReactNode }) {
   return (
@@ -12,7 +11,6 @@ export function SiteLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <WhatsAppFloating />
-      <SummerOfferPopup />
       <Toaster richColors position="top-right" />
     </div>
   );

@@ -25,20 +25,22 @@ export function Footer() {
           <h3 className="font-display text-2xl font-bold text-white">{SITE.name}</h3>
           <p className="mt-3 text-sm text-white/70">{SITE.description}</p>
           <div className="mt-5 flex gap-3">
-            {[
-              [SITE.socials.instagram, Instagram],
-              [SITE.socials.facebook, Facebook]
-            ].map(([href, Icon]: any, i) => (
-              <a
-                key={i}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-primary hover:text-ink transition-colors"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
+            <a
+              href={SITE.socials.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-[#E4405F] hover:text-white transition-colors"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
+            <a
+              href={SITE.socials.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="grid h-10 w-10 place-items-center rounded-full bg-white/10 hover:bg-[#1877F2] hover:text-white transition-colors"
+            >
+              <Facebook className="h-4 w-4" />
+            </a>
           </div>
         </div>
         <div>
