@@ -10,8 +10,13 @@ export const SITE = {
   address: "Trade Center First, Dubai, UAE",
   mapEmbed:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.8636058280767!2d55.2706273!3d25.207821799999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43005d25fb79%3A0xb4d1ebe1f32d26a2!2sRed%20Sand%20Dunes%20DXB!5e0!3m2!1sen!2s!4v1782072134466!5m2!1sen!2s",
-  /** Official Google Maps short link to the business profile (opens the real reviews). */
-  googleReviews: "https://maps.app.goo.gl/FiWZpPqwap7S8bcHA",
+  /**
+   * Official Google Maps short link to the Red Sand Dunes DXB listing.
+   * One listing, two jobs: real reviews (homepage CTA) and directions
+   * (address links in the footer + contact page). Keeping it as Google's
+   * own short link means we never have to maintain a place ID or API key.
+   */
+  googleMaps: "https://maps.app.goo.gl/FiWZpPqwap7S8bcHA",
   socials: {
     instagram: "https://www.instagram.com/redsanddunesdxb/",
     facebook: "https://www.facebook.com/profile.php?id=61589483815038",

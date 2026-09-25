@@ -63,7 +63,18 @@ export function Footer() {
         <div>
           <h4 className="font-display text-lg font-semibold text-white">Contact</h4>
           <ul className="mt-4 space-y-3 text-sm">
-            <li className="flex gap-2"><MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" />{SITE.address}</li>
+            <li className="flex gap-2">
+              <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" />
+              <a
+                href={SITE.googleMaps}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Open in Google Maps"
+                className="hover:text-primary transition-colors"
+              >
+                {SITE.address}
+              </a>
+            </li>
             <li className="flex gap-2"><Phone className="h-4 w-4 mt-0.5 text-primary shrink-0" />{SITE.phone}</li>
             <li className="flex gap-2"><Mail className="h-4 w-4 mt-0.5 text-primary shrink-0" />{SITE.email}</li>
           </ul>

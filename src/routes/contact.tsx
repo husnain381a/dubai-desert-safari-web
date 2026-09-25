@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { MapPin, Phone, Mail, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Mail, MessageCircle, ArrowUpRight } from "lucide-react";
 import { SITE, waLink } from "@/lib/site";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -56,7 +56,31 @@ function ContactPage() {
             <h2 className="font-display text-3xl font-bold">Talk to a desert expert</h2>
             <p className="mt-3 text-muted-foreground">Have questions about a package, custom itinerary or group booking? Reach out — we'd love to help plan your adventure.</p>
             <ul className="mt-8 space-y-4">
-              <li className="flex gap-3"><MapPin className="h-5 w-5 text-primary mt-0.5" /><div><div className="font-semibold">Office</div><div className="text-muted-foreground text-sm">{SITE.address}</div></div></li>
+              <li className="flex gap-3">
+                <MapPin className="h-5 w-5 text-primary mt-0.5" />
+                <div>
+                  <div className="font-semibold">Office</div>
+                  <a
+                    href={SITE.googleMaps}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground text-sm hover:text-primary"
+                  >
+                    {SITE.address}
+                  </a>
+                  <div className="mt-1.5">
+                    <a
+                      href={SITE.googleMaps}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                    >
+                      Get directions
+                      <ArrowUpRight className="h-3 w-3" />
+                    </a>
+                  </div>
+                </div>
+              </li>
               <li className="flex gap-3"><Phone className="h-5 w-5 text-primary mt-0.5" /><div><div className="font-semibold">Phone</div><a href={`tel:${SITE.phone}`} className="text-muted-foreground text-sm hover:text-primary">{SITE.phone}</a></div></li>
               <li className="flex gap-3"><Mail className="h-5 w-5 text-primary mt-0.5" /><div><div className="font-semibold">Email</div><a href={`mailto:${SITE.email}`} className="text-muted-foreground text-sm hover:text-primary">{SITE.email}</a></div></li>
               <li className="flex gap-3"><MessageCircle className="h-5 w-5 text-primary mt-0.5" /><div><div className="font-semibold">WhatsApp</div><a href={waLink()} target="_blank" rel="noopener noreferrer" className="text-muted-foreground text-sm hover:text-primary">{SITE.whatsappDisplay}</a></div></li>

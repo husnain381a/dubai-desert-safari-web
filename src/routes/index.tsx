@@ -590,7 +590,7 @@ function Home() {
             <div className="mt-12 flex flex-col items-center gap-3 text-center">
               <Button asChild size="lg" className="rounded-full px-8">
                 <a
-                  href={SITE.googleReviews}
+                  href={SITE.googleMaps}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
