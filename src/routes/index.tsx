@@ -585,6 +585,24 @@ function Home() {
                 </Reveal>
               ))}
           </div>
+
+          <Reveal>
+            <div className="mt-12 flex flex-col items-center gap-3 text-center">
+              <Button asChild size="lg" className="rounded-full px-8">
+                <a
+                  href={SITE.googleReviews}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Star className="h-4 w-4 fill-current" />
+                  Read our reviews on Google
+                </a>
+              </Button>
+              <p className="text-xs text-muted-foreground">
+                See what our guests say on our Google Business Profile.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
