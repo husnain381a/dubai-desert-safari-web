@@ -1,1 +1,7 @@
 project_id = "bfvbbpwxfjdqqvxjgjix"
+
+# The booking form is used by anonymous visitors, so the gateway cannot require
+# a user JWT. The function authenticates itself with the service-role key and
+# only ever acts on a booking row that really exists in the database.
+[functions.booking-notification]
+verify_jwt = false

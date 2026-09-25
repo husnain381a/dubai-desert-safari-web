@@ -69,6 +69,7 @@ export type Database = {
           guests: number
           id: string
           message: string | null
+          notified_at: string | null
           package_id: string | null
           package_title: string | null
           phone: string
@@ -85,6 +86,7 @@ export type Database = {
           guests?: number
           id?: string
           message?: string | null
+          notified_at?: string | null
           package_id?: string | null
           package_title?: string | null
           phone: string
@@ -101,6 +103,7 @@ export type Database = {
           guests?: number
           id?: string
           message?: string | null
+          notified_at?: string | null
           package_id?: string | null
           package_title?: string | null
           phone?: string

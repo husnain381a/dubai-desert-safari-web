@@ -19,6 +19,7 @@ import { waLink, SITE } from "@/lib/site";
 import { ADD_ONS, PICKUP_SLOTS, lookupServicePrice } from "@/lib/catalog";
 import { formatAED, getPackagePricing, roundPrice } from "@/lib/pricing";
 import { buildInvoice, composeBookingMessage, createInvoiceRef, type Invoice } from "@/lib/invoice";
+import { notifyAdminOfBooking } from "@/lib/booking-notify";
 import { InvoiceActions, InvoiceFooterNote, InvoicePaper } from "./InvoicePaper";
 import { usePrintInvoice } from "@/hooks/use-print-invoice";
 import { Check, Loader2, MessageCircle, Minus, Plus, Receipt } from "lucide-react";
@@ -195,6 +196,15 @@ export function BookingDialog({ children, defaultPackage, defaultPrice, defaultO
     setStep("invoice");
     toast.success("Booking request received — your invoice is ready.");
     form.reset();
+
+    // Let the studio know by email. Deliberately not awaited: the booking is
+    // already saved, so a slow or failed notification must not block the guest.
+    void notifyAdminOfBooking({
+      email: draft.guest.email,
+      phone: draft.guest.phone,
+      package_title: draft.packageTitle,
+      tour_date: draft.tourDate,
+    });
   };
 
   const today = new Date().toISOString().slice(0, 10);

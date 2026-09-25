@@ -20,3 +20,9 @@ export const SITE = {
 
 export const waLink = (msg?: string) =>
   `https://wa.me/${SITE.whatsapp}${msg ? `?text=${encodeURIComponent(msg)}` : ""}`;
+
+/** wa.me link addressed to a guest's own number (used by the admin panel). */
+export const waGuestLink = (phone: string, msg?: string) => {
+  const digits = phone.replace(/\D/g, "");
+  return `https://wa.me/${digits}${msg ? `?text=${encodeURIComponent(msg)}` : ""}`;
+};
