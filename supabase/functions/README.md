@@ -23,17 +23,21 @@ the form stores in `bookings.message`, plus:
 ```bash
 # 1. Link the CLI to the project (project_id is already in ../config.toml)
 supabase login
-supabase link --project-ref bfvbbpwxfjdqqvxjgjix
+supabase link --project-ref cwkztwvubclysvxjhvby
 
 # 2. Apply the migration that adds bookings.notified_at
-supabase db push
+#    Do NOT use `supabase db push` — this project has no recorded migration
+#    history, so it would try to replay every migration from scratch. Run the
+#    statement below in Dashboard → SQL Editor instead:
+#      ALTER TABLE public.bookings
+#        ADD COLUMN IF NOT EXISTS notified_at TIMESTAMPTZ;
 
 # 3. Store the Resend API key
 #    Get one at https://resend.com/api-keys
 supabase secrets set RESEND_API_KEY=re_xxxxxxxx
 
 # 4. Deploy
-supabase functions deploy booking-notification --no-verify-jwt
+supabase functions deploy booking-notification --project-ref cwkztwvubclysvxjhvby --no-verify-jwt
 ```
 
 `verify_jwt = false` is already set in `supabase/config.toml`: visitors are not
