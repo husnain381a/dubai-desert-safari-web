@@ -88,7 +88,11 @@ function PackageDetail() {
                   {formatAED(getPackagePricing(p).discountedPrice)}
                   <span className="text-base text-muted-foreground font-normal"> /person</span>
                 </div>
-                <BookingDialog defaultPackage={p.title}>
+                <BookingDialog
+                  defaultPackage={p.title}
+                  defaultPrice={getPackagePricing(p).discountedPrice}
+                  defaultOldPrice={getPackagePricing(p).originalPrice}
+                >
                   <Button
                     className="mt-5 w-full bg-primary text-primary-foreground hover:bg-primary/90"
                     size="lg"

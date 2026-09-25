@@ -57,7 +57,7 @@ function ServicesPage() {
                       <li key={f} className="flex gap-2"><Check className="h-4 w-4 text-primary mt-0.5 shrink-0" /> {f}</li>
                     ))}
                   </ul>
-                  <BookingDialog defaultPackage={s.title}>
+                  <BookingDialog defaultPackage={s.title} defaultPrice={s.price}>
                     <Button className="mt-5 w-full bg-primary text-primary-foreground hover:bg-primary/90">Book {s.title}</Button>
                   </BookingDialog>
                 </div>

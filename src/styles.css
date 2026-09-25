@@ -126,3 +126,45 @@
 @utility section-pad {
   padding-block: clamp(4rem, 8vw, 7rem);
 }
+
+/* "Save as PDF" on the booking invoice: hide the app, print only the paper. */
+@media print {
+  html, body {
+    background: #fff !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+  }
+  body * { visibility: hidden !important; }
+  /* Hide the app shell, keep the dialog portal that holds the invoice. */
+  body.printing-invoice > div:not(:has([data-print-root])) { display: none !important; }
+  [data-print-overlay] { display: none !important; }
+  [data-print-root] {
+    position: static !important;
+    transform: none !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  [data-print-invoice],
+  [data-print-invoice] * { visibility: visible !important; }
+  [data-print-invoice] {
+    position: static !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+  [data-print-invoice] table,
+  [data-print-invoice] section { break-inside: avoid; }
+}

@@ -367,7 +367,7 @@ function Home() {
                     </div>
                     <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{s.desc}</p>
                     <div className="mt-5">
-                      <BookingDialog defaultPackage={s.title}>
+                      <BookingDialog defaultPackage={s.title} defaultPrice={s.price}>
                         <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                           Book Now
                         </Button>
@@ -437,7 +437,11 @@ function Home() {
                       <Clock className="h-3.5 w-3.5" /> {p.duration}
                     </div>
                     <div className="mt-5 flex gap-2">
-                      <BookingDialog defaultPackage={p.title}>
+                      <BookingDialog
+                        defaultPackage={p.title}
+                        defaultPrice={getPackagePricing(p).discountedPrice}
+                        defaultOldPrice={getPackagePricing(p).originalPrice}
+                      >
                         <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90">
                           Book Now
                         </Button>

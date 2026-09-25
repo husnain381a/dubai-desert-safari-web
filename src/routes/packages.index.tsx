@@ -114,7 +114,11 @@ function PackagesPage() {
                     <Clock className="h-3.5 w-3.5" /> {p.duration}
                   </div>
                   <div className="mt-4 flex gap-2">
-                    <BookingDialog defaultPackage={p.title}>
+                    <BookingDialog
+                      defaultPackage={p.title}
+                      defaultPrice={getPackagePricing(p).discountedPrice}
+                      defaultOldPrice={getPackagePricing(p).originalPrice}
+                    >
                       <Button className="flex-1 bg-primary text-primary-foreground">
                         Book Now
                       </Button>
