@@ -52,11 +52,19 @@ verifies itself by loading a real booking row instead.
 | `NOTIFY_FROM_EMAIL` | `Red Sand Dunes DXB <onboarding@resend.dev>` |
 | `SITE_URL`          | `https://redsanddunesdxb.com`               |
 
-`onboarding@resend.dev` only delivers to the Resend account's own address. Once
-`redsanddunesdxb.com` is verified in Resend, set a real sender, e.g.:
+Currently `ADMIN_EMAIL` is `redsanddunesdxb0@gmail.com`.
+
+The `onboarding@resend.dev` sender can only deliver to an address that belongs to
+the Resend account — the owner's own address, or an address added as a team
+member. Sending to anyone else fails with a 403 and the booking is left
+un-notified so it can be retried.
+
+To use a different recipient, either add it as a team member in Resend, or
+verify `redsanddunesdxb.com` and set a real sender:
 
 ```bash
 supabase secrets set NOTIFY_FROM_EMAIL="Red Sand Dunes DXB <bookings@redsanddunesdxb.com>"
+supabase secrets set ADMIN_EMAIL=info@redsanddunesdxb.com
 ```
 
 ### Manual sends
